@@ -89,7 +89,7 @@ public class ECCAlgorithm {
             int xr, yr, tempX, tempY;
             int xp, yp, xq, yq;
             int i; //for iterating
-            Point basis = new Point(2,4); //basis as public key
+            Point basis = new Point(2,4); //basis as public key ---> harus ada di kurva, harus dicek dulu untuk tiap kurva.
             //System.out.println("\n" + koordinat.getY() + "\n");
             //koordinat = new Point(koordinat.getX(),nilaiBaruY);
             nilaiY = functionECC(nilaiX);
