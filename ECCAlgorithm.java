@@ -85,7 +85,7 @@ public class ECCAlgorithm {
             int lambdaSub;
             int tempLambda;
             int privateKey = 80; //privatekey, b=privatekey buat yang di bawah2 (sesuai slide)
-            int k = 140; //bilangan yang dipilih pengirim pesan selang [1,p-1]
+            int k = 137; //bilangan yang dipilih pengirim pesan selang [1,p-1]
             int xr, yr, tempX, tempY;
             int xp, yp, xq, yq;
             int i; //for iterating
@@ -95,7 +95,7 @@ public class ECCAlgorithm {
             nilaiY = functionECC(nilaiX);
             Point PM1= new Point(nilaiX,nilaiY);
             //System.out.println(PM.toString());
-            System.out.println("\nNilai PM1: " + PM1.toString());
+            System.out.println("\nNilai PM1: " + PM1.toString()); //PM1: PM sebelum enkripsi
             
             
             /*
@@ -233,15 +233,17 @@ public class ECCAlgorithm {
             yp = (int)PC2.getY();
             xq = (int)inversebkB.getX();
             yq = (int)inversebkB.getY();
-            System.out.println("xp: " + xp + " | yp: " + yp + " | xq: " + xq +" | yq: " + yq);
+            //System.out.println("xp: " + xp + " | yp: " + yp + " | xq: " + xq +" | yq: " + yq);
             
             lambdaSub = lambdaSubstraction(xp, yp, xq, yq);
             tempLambda = lambdaSub;
             xr = (((int)Math.pow(tempLambda, 2) - xp - xq)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
             yr = (((tempLambda*(xp-xr)) - yp)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
             Point PM2 = new Point(xr,yr);
-            System.out.println("\nNilai PM2: " + PM2.toString());
-            
+            System.out.println("\nNilai PM2: " + PM2.toString()); //PM2: PM setelah dekripsi, harus sama dengan PM1
+            if (PM1.getX() == PM2.getX() && PM1.getY() == PM2.getY()) {
+                System.out.println("\n-----------------------------\nPM1=PM2, kode berhasil didekripsi.");
+            }
 	}
 
 }
