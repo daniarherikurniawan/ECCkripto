@@ -82,7 +82,7 @@ public class ECCAlgorithm {
             System.out.println(PM.toString());
             
             /*
-             * hitung koordinat xr dan yr
+             * hitung koordinat xr dan yr menggunakan for loop
             */
             xr = 0;
             yr = 0;
@@ -101,6 +101,7 @@ public class ECCAlgorithm {
             tempLambda = lambdaAdd;
             }
             //System.out.println("\n" + koordinat.getY());
+            
             
 	}
 
