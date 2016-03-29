@@ -1,4 +1,4 @@
-package ecc;
+//package ecc;
 
 import java.util.Scanner;
 import java.awt.Point;
@@ -62,14 +62,31 @@ public class ECCAlgorithm {
             return result;
 
         }
+        public static int lambdaSubstraction(int xp, int yp, int xq, int yq) {
+            int nominator = yp - yq;
+            int denominator = xp - xq;
+            System.out.println("nominator: " + nominator + "\ndenominator: " + denominator + "\nInverse denominator: " /*+ intInverseDenominator + "\nResult: " + result*/);
+
+            BigInteger bigNominator = BigInteger.valueOf((long)nominator);
+            BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
+            BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);            
+
+            int intInverseDenominator = inverseDenominator.intValue();
+            int result = (nominator*intInverseDenominator)%intPrimeNumber;
+            System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
+            return result;
+
+        }
+
 	public static void main(String[] args) {
             int plainText = 2; //arbitrary plaintext
             int nilaiX = plainText;
             int nilaiY;
             int lambdaDup;
             int lambdaAdd;
+            int lambdaSub;
             int tempLambda;
-            int privateKey = 3;
+            int privateKey = 2;
             int k = 2; //bilangan yang dipilih pengirim pesan selang [1,p-1]
             int xr, yr, tempX, tempY;
             int xp, yp, xq, yq;
@@ -220,11 +237,12 @@ public class ECCAlgorithm {
             yq = (int)inversebkB.getY();
             System.out.println("xp: " + xp + " | yp: " + yp + " | xq: " + xq +" | yq: " + yq);
             
-            lambdaAdd = lambdaAddition(xp, yp, xq, yq);
-            tempLambda = lambdaAdd;
+            lambdaSub = lambdaSubstraction(xp, yp, xq, yq);
+            tempLambda = lambdaSub;
             xr = (((int)Math.pow(tempLambda, 2) - xp - xq)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
             yr = (((tempLambda*(xp-xr)) - yp)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
             Point PM2 = new Point(xr,yr);
+            System.out.println("\nNilai PM2: " + PM2.toString());
             
 	}
 
