@@ -8,7 +8,7 @@ import java.math.BigInteger;
 
 public class ECCAlgorithm {
     
-        static BigInteger primeNumber = new BigInteger("11");//prime number
+        static BigInteger primeNumber = new BigInteger("151");//prime number
         static int intPrimeNumber = primeNumber.intValue(); //integer version of prime number            
         static int a = 1; //coefficient of E
         static int b = 6; //coefficient of E
@@ -44,13 +44,13 @@ public class ECCAlgorithm {
             
             int intInverseDenominator = inverseDenominator.intValue();            
             int result = (nominator*intInverseDenominator)%intPrimeNumber;
-            //System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
+            //System.out.println("nominator: " + nominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
             return result;
         }
 
         public static int lambdaAddition(int xp, int yp, int xq, int yq) {
-            int nominator = Math.abs(yp - yq);
-            int denominator = Math.abs(xp - xq);
+            int nominator = (yp - yq);
+            int denominator = (xp - xq);
 
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
             BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);            
@@ -62,9 +62,9 @@ public class ECCAlgorithm {
 
         }
         public static int lambdaSubstraction(int xp, int yp, int xq, int yq) {
-            int nominator = Math.abs(yp - yq);
-            int denominator = xp - xq;
-            System.out.println("nominator: " + nominator + "\ndenominator: " + denominator /*+ "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result*/);
+            int nominator = (yp - yq);
+            int denominator = (xp - xq);
+            //System.out.println("nominator: " + nominator + "\ndenominator: " + denominator /*+ "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result*/);
 
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
             BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);            
@@ -77,15 +77,15 @@ public class ECCAlgorithm {
         }
 
 	public static void main(String[] args) {
-            int plainText = 7; //arbitrary plaintext
+            int plainText = 99; //arbitrary plaintext
             int nilaiX = plainText;
             int nilaiY;
             int lambdaDup;
             int lambdaAdd;
             int lambdaSub;
             int tempLambda;
-            int privateKey = 2; //privatekey, b=privatekey buat yang di bawah2 (sesuai slide)
-            int k = 2; //bilangan yang dipilih pengirim pesan selang [1,p-1]
+            int privateKey = 80; //privatekey, b=privatekey buat yang di bawah2 (sesuai slide)
+            int k = 140; //bilangan yang dipilih pengirim pesan selang [1,p-1]
             int xr, yr, tempX, tempY;
             int xp, yp, xq, yq;
             int i; //for iterating
