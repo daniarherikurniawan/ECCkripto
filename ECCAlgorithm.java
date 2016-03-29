@@ -66,37 +66,142 @@ public class ECCAlgorithm {
             int lambdaDup;
             int lambdaAdd;
             int tempLambda;
-            int privateKey = 5; 
+            int privateKey = 3;
+            int k = 2; //bilangan yang dipilih pengirim pesan selang [1,p-1]
             int xr, yr, tempX, tempY;
-            int k; //for iterating
-            Point basis = new Point(0,1); //basis as public key
+            int xp, yp, xq, yq;
+            int i; //for iterating
+            Point basis = new Point(2,4); //basis as public key
             //System.out.println("\n" + koordinat.getY() + "\n");
             //koordinat = new Point(koordinat.getX(),nilaiBaruY);
             nilaiY = functionECC(nilaiX);
-            Point PM= new Point(nilaiX,nilaiY);
-            System.out.println(PM.toString());
+            Point PM1= new Point(nilaiX,nilaiY);
+            //System.out.println(PM.toString());
+            System.out.println("\nNilai PM1: " + PM1.toString());
+            
             
             /*
              * hitung koordinat xr dan yr menggunakan for loop
+            */           
+            
+            /*
+            pertama, hitung PB = privatekey*basis
             */
             xr = 0;
             yr = 0;
+            nilaiX = basis.getX();
+            nilaiY = basis.getY();
             tempX = nilaiX;
             tempY = nilaiY;
-            lambdaDup = lambdaDuplication(nilaiX, nilaiY);
-            tempLambda = lambdaDup;
-            for (k=1; k<privateKey; k++) {                
-            xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
-            yr = (((tempLambda*(tempX-xr)) - tempY)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
-            tempX = xr;
-            tempY = yr;
-            //System.out.println("Nilai lambda: " + tempLambda);
-            System.out.println("\nk = " + k + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
-            lambdaAdd = lambdaAddition(nilaiX, nilaiY, tempX, tempY);
-            tempLambda = lambdaAdd;
+            lambdaDup = lambdaDuplication(tempX, tempY);
+            tempLambda = lambdaDup;                                                  
+            for (i=1; i<privateKey; i++) {                
+                xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
+                yr = (((tempLambda*(tempX-xr)) - tempY)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+                tempX = xr;
+                tempY = yr;
+                //System.out.println("Nilai lambda: " + tempLambda);
+                //System.out.println("\ni = " + i + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
+                lambdaAdd = lambdaAddition(nilaiX, nilaiY, tempX, tempY);
+                tempLambda = lambdaAdd;
             }
-            //System.out.println("\n" + koordinat.getY());
+            Point PB = new Point(xr,yr);
+            System.out.println("\nNilai PB: " + PB.toString());
             
+            
+            /*
+            lalu, hitung kPB
+            */
+            xr = 0;
+            yr = 0;
+            nilaiX = PB.getX();
+            nilaiY = PB.getY();
+            tempX = nilaiX;
+            tempY = nilaiY;
+            lambdaDup = lambdaDuplication(tempX, tempY);
+            tempLambda = lambdaDup;
+            
+            for (i=1; i<k; i++) {                
+                xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
+                yr = (((tempLambda*(tempX-xr)) - tempY)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+                tempX = xr;
+                tempY = yr;
+                //System.out.println("Nilai lambda: " + tempLambda);
+                //System.out.println("\ni = " + i + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
+                lambdaAdd = lambdaAddition(nilaiX, nilaiY, tempX, tempY);
+                tempLambda = lambdaAdd;
+            }
+            Point kPB = new Point(xr,yr);
+            System.out.println("\nNilai kPB: " + kPB.toString());
+            
+            
+            /*
+            lalu, hitung kB
+            */
+            xr = 0;
+            yr = 0;
+            nilaiX = basis.getX();
+            nilaiY = basis.getY();
+            tempX = nilaiX;
+            tempY = nilaiY;
+            lambdaDup = lambdaDuplication(tempX, tempY);
+            tempLambda = lambdaDup;
+
+            for (i=1; i<k; i++) {                
+                xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
+                yr = (((tempLambda*(tempX-xr)) - tempY)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+                tempX = xr;
+                tempY = yr;
+                //System.out.println("Nilai lambda: " + tempLambda);
+                //System.out.println("\ni = " + i + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
+                lambdaAdd = lambdaAddition(nilaiX, nilaiY, tempX, tempY);
+                tempLambda = lambdaAdd;
+            }
+            Point kB = new Point(xr,yr);
+            System.out.println("\nNilai kB " + kB.toString());
+            
+            
+            /*
+            hitung titik (PM + kPB) sebagai koordinat y dari PC
+            */
+            xp = PM1.getX();
+            yp = PM1.getY();
+            xq = kPB.getX();
+            yq = kPB.getY();
+            lambdaAdd = lambdaAddition(xp, yp, xq, yq);
+            tempLambda = lambdaAdd;
+            xr = (((int)Math.pow(tempLambda, 2) - xp - xq)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
+            yr = (((tempLambda*(xp-xr)) - yp)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+            Point PC1 = new Point(kB.getX(),kB.getY());
+            Point PC2 = new Point(xr,yr);
+            System.out.println("\nNilai PC1: " + PC1.toString());
+            System.out.println("\nNilai PC2: " + PC2.toString());
+            
+            
+            /*
+            lalu, hitung b.(kB)
+            */
+            xr = 0;
+            yr = 0;
+            nilaiX = kB.getX();
+            nilaiY = kB.getY();
+            tempX = nilaiX;
+            tempY = nilaiY;
+            lambdaDup = lambdaDuplication(tempX, tempY);
+            tempLambda = lambdaDup;
+
+            for (i=1; i<k; i++) {                
+                xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
+                yr = (((tempLambda*(tempX-xr)) - tempY)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+                tempX = xr;
+                tempY = yr;
+                //System.out.println("Nilai lambda: " + tempLambda);
+                //System.out.println("\ni = " + i + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
+                lambdaAdd = lambdaAddition(nilaiX, nilaiY, tempX, tempY);
+                tempLambda = lambdaAdd;
+            }
+            Point bkB = new Point(xr,yr);
+            System.out.println("\nNilai b.(kB): " + bkB.toString());
             
 	}
 
