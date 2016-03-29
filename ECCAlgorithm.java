@@ -174,8 +174,8 @@ public class ECCAlgorithm {
             yr = (((tempLambda*(xp-xr)) - yp)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
             Point PC1 = new Point(kB.getX(),kB.getY());
             Point PC2 = new Point(xr,yr);
-            System.out.println("\nNilai PC1: " + PC1.toString());
-            System.out.println("\nNilai PC2: " + PC2.toString());
+            System.out.println("\nNilai PC1: " + PC1.toString() + " << kB");
+            System.out.println("\nNilai PC2: " + PC2.toString() + " << PM + kPB");
             
             
             /*
@@ -190,7 +190,7 @@ public class ECCAlgorithm {
             lambdaDup = lambdaDuplication(tempX, tempY);
             tempLambda = lambdaDup;
 
-            for (i=1; i<k; i++) {                
+            for (i=1; i<privateKey; i++) {                
                 xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
                 yr = (((tempLambda*(tempX-xr)) - tempY)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
                 tempX = xr;
@@ -202,6 +202,26 @@ public class ECCAlgorithm {
             }
             Point bkB = new Point(xr,yr);
             System.out.println("\nNilai b.(kB): " + bkB.toString());
+            /*
+            compute inverse point of bkB
+            */
+            Point inversebkB = new Point(bkB.getX(),((-1)*(bkB.getY()))%intPrimeNumber);
+            System.out.println("\nNilai inverse b.(kB): " + inversebkB.toString());
+            /*
+            proses pengurangan PC2 - bkB = PC2 + inversebkB = PM (should be!!)
+            */
+            
+            xp = PC2.getX();
+            yp = PC2.getY();
+            xq = inversebkB.getX();
+            yq = inversebkB.getY();
+            System.out.println("xp: " + xp + " | yp: " + yp + " | xq: " + xq +" | yq: " + yq);
+            
+            lambdaAdd = lambdaAddition(xp, yp, xq, yq);
+            tempLambda = lambdaAdd;
+            xr = (((int)Math.pow(tempLambda, 2) - xp - xq)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
+            yr = (((tempLambda*(xp-xr)) - yp)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+            Point PM2 = new Point(xr,yr);
             
 	}
 
