@@ -73,7 +73,7 @@ public class ECCAlgorithm {
             int tempLambda;
             int privateKey = 5; 
             int xr, yr, tempX, tempY;
-            int i; //for iterating
+            int k; //for iterating
             Point basis = new Point(0,1); //basis as public key
             //System.out.println("\n" + koordinat.getY() + "\n");
             //koordinat = new Point(koordinat.getX(),nilaiBaruY);
@@ -90,13 +90,13 @@ public class ECCAlgorithm {
             tempY = nilaiY;
             lambdaDup = lambdaDuplication(nilaiX, nilaiY);
             tempLambda = lambdaDup;
-            for (i=1; i<privateKey; i++) {                
+            for (k=1; k<privateKey; k++) {                
             xr = (((int)Math.pow(tempLambda, 2) - nilaiX - tempX)%primeNumber + primeNumber)%primeNumber;
             yr = (((tempLambda*(tempX-xr)) - tempY)%primeNumber + primeNumber)%primeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
             tempX = xr;
             tempY = yr;
             //System.out.println("Nilai lambda: " + tempLambda);
-            System.out.println("\nk = " + i + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
+            System.out.println("\nk = " + k + "\nnilai xr dan yr: " + xr + " " + yr + "\n---------------\n");
             lambdaAdd = lambdaAddition(nilaiX, nilaiY, tempX, tempY);
             tempLambda = lambdaAdd;
             }
