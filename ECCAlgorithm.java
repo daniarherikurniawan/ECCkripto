@@ -37,25 +37,39 @@ public class ECCAlgorithm {
             int denominator = 2*yp;
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
             BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);
-            System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + inverseDenominator);
-            return 0;
+            
+            int intInverseDenominator = inverseDenominator.intValue();
+            int intPrimeNumber = primeNumber.intValue();
+            
+            int result = (nominator*intInverseDenominator)%intPrimeNumber;
+            //System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
+            return result;
         }
 
 	public static void main(String[] args) {
+            int primeNumber = 11;
             int plainText = 2; //arbitrary plaintext
             int nilaiX = plainText;
             int nilaiY;
-            int lambda;
+            int lambdaDup;
+            int lambdaAdd;
             int privateKey = 2;
+            int xr, yr;
             Point basis = new Point(0,1); //basis as public key
             //System.out.println("\n" + koordinat.getY() + "\n");
             //koordinat = new Point(koordinat.getX(),nilaiBaruY);
             nilaiY = functionECC(nilaiX);
             Point PM= new Point(nilaiX,nilaiY);
-
             System.out.println(PM.toString());
-            lambda = lambdaDuplication(nilaiX, nilaiY);
+            lambdaDup = lambdaDuplication(nilaiX, nilaiY);
             
+            /*
+             * hitung koordinat xr dan yr
+            */
+            xr = ((int)Math.pow(lambdaDup, 2) - 2*nilaiX)%primeNumber;
+            yr = (((lambdaDup*(nilaiX-xr)) - nilaiY)%primeNumber + primeNumber)%primeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
+            System.out.println("\nNilai lambda: " + lambdaDup);
+            System.out.println("\nnilai xr dan yr: " + xr + " " + yr);
             //System.out.println("\n" + koordinat.getY());
             
 	}
