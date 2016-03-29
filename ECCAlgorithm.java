@@ -65,7 +65,7 @@ public class ECCAlgorithm {
         public static int lambdaSubstraction(int xp, int yp, int xq, int yq) {
             int nominator = yp - yq;
             int denominator = xp - xq;
-            System.out.println("nominator: " + nominator + "\ndenominator: " + denominator + "\nInverse denominator: " /*+ intInverseDenominator + "\nResult: " + result*/);
+            //System.out.println("nominator: " + nominator + "\ndenominator: " + denominator + "\nInverse denominator: " /*+ intInverseDenominator + "\nResult: " + result*/);
 
             BigInteger bigNominator = BigInteger.valueOf((long)nominator);
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
@@ -73,7 +73,7 @@ public class ECCAlgorithm {
 
             int intInverseDenominator = inverseDenominator.intValue();
             int result = (nominator*intInverseDenominator)%intPrimeNumber;
-            System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
+            //System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
             return result;
 
         }
