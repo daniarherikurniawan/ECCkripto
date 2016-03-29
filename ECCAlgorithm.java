@@ -208,16 +208,16 @@ public class ECCAlgorithm {
             /*
             compute inverse point of bkB
             */
-            Point inversebkB = new Point(bkB.getX(),((-1)*(bkB.getY()))%intPrimeNumber);
+            Point inversebkB = new Point((int)bkB.getX(),(int)((-1)*(bkB.getY()))%intPrimeNumber);
             System.out.println("\nNilai inverse b.(kB): " + inversebkB.toString());
             /*
             proses pengurangan PC2 - bkB = PC2 + inversebkB = PM (should be!!)
             */
             
-            xp = PC2.getX();
-            yp = PC2.getY();
-            xq = inversebkB.getX();
-            yq = inversebkB.getY();
+            xp = (int)PC2.getX();
+            yp = (int)PC2.getY();
+            xq = (int)inversebkB.getX();
+            yq = (int)inversebkB.getY();
             System.out.println("xp: " + xp + " | yp: " + yp + " | xq: " + xq +" | yq: " + yq);
             
             lambdaAdd = lambdaAddition(xp, yp, xq, yq);
