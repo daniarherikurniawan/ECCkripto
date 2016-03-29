@@ -10,13 +10,14 @@ public class ECCAlgorithm {
     
         static BigInteger primeNumber = new BigInteger("11");//prime number
         static int intPrimeNumber = primeNumber.intValue(); //integer version of prime number            
-        static int a = 1; //coefficient of prime number
+        static int a = 1; //coefficient of E
+        static int b = 6; //coefficient of E
 
         public static int functionECC(int x) {
             //int result = 1;
             int ySquare; 
             int y = 1; // initialization of y
-            ySquare = ((int)Math.pow(x, 3) + x + 6)%intPrimeNumber ; // this is the E function y^2 = x^3 + ax + b
+            ySquare = ((int)Math.pow(x, 3) + a*x + b)%intPrimeNumber ; // this is the E function y^2 = x^3 + ax + b
             //System.out.println("nilai ySquare: " + ySquare + "\n");
             
             while ( ((int)Math.pow(y,2)-ySquare)%intPrimeNumber != 0 )  {
@@ -36,13 +37,12 @@ public class ECCAlgorithm {
         public static int lambdaDuplication(int xp, int yp) {
             
             int nominator = 3*(int)Math.pow(xp,2) + a;
-            BigInteger bigNominator = BigInteger.valueOf((long)nominator);
             int denominator = 2*yp;
+            
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
             BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);
             
-            int intInverseDenominator = inverseDenominator.intValue();
-            
+            int intInverseDenominator = inverseDenominator.intValue();            
             int result = (nominator*intInverseDenominator)%intPrimeNumber;
             //System.out.println("nominator: " + bigNominator + "\ndenominator: " + bigDenominator + "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result);
             return result;
@@ -52,7 +52,6 @@ public class ECCAlgorithm {
             int nominator = Math.abs(yp - yq);
             int denominator = Math.abs(xp - xq);
 
-            BigInteger bigNominator = BigInteger.valueOf((long)nominator);
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
             BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);            
 
@@ -63,11 +62,10 @@ public class ECCAlgorithm {
 
         }
         public static int lambdaSubstraction(int xp, int yp, int xq, int yq) {
-            int nominator = yp - yq;
+            int nominator = Math.abs(yp - yq);
             int denominator = xp - xq;
-            //System.out.println("nominator: " + nominator + "\ndenominator: " + denominator + "\nInverse denominator: " /*+ intInverseDenominator + "\nResult: " + result*/);
+            System.out.println("nominator: " + nominator + "\ndenominator: " + denominator /*+ "\nInverse denominator: " + intInverseDenominator + "\nResult: " + result*/);
 
-            BigInteger bigNominator = BigInteger.valueOf((long)nominator);
             BigInteger bigDenominator = BigInteger.valueOf((long)denominator);
             BigInteger inverseDenominator = bigDenominator.modInverse(primeNumber);            
 
@@ -79,14 +77,14 @@ public class ECCAlgorithm {
         }
 
 	public static void main(String[] args) {
-            int plainText = 2; //arbitrary plaintext
+            int plainText = 7; //arbitrary plaintext
             int nilaiX = plainText;
             int nilaiY;
             int lambdaDup;
             int lambdaAdd;
             int lambdaSub;
             int tempLambda;
-            int privateKey = 2;
+            int privateKey = 2; //privatekey, b=privatekey buat yang di bawah2 (sesuai slide)
             int k = 2; //bilangan yang dipilih pengirim pesan selang [1,p-1]
             int xr, yr, tempX, tempY;
             int xp, yp, xq, yq;
@@ -130,7 +128,7 @@ public class ECCAlgorithm {
             
             
             /*
-            lalu, hitung kPB
+            lalu, hitung kPB = k*(privatekey*basis)
             */
             xr = 0;
             yr = 0;
@@ -156,7 +154,7 @@ public class ECCAlgorithm {
             
             
             /*
-            lalu, hitung kB
+            lalu, hitung kB=k*basis
             */
             xr = 0;
             yr = 0;
@@ -182,7 +180,7 @@ public class ECCAlgorithm {
             
             
             /*
-            hitung titik (PM + kPB) sebagai koordinat y dari PC
+            hitung titik (PM + kPB) sebagai titik 2 dari PC (PC2)
             */
             xp = (int) PM1.getX();
             yp = (int) PM1.getY();
@@ -199,7 +197,7 @@ public class ECCAlgorithm {
             
             
             /*
-            lalu, hitung b.(kB)
+            lalu, hitung bkB = privatekey*(k*basis)
             */
             xr = 0;
             yr = 0;
