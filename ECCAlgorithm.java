@@ -1,4 +1,7 @@
+package ecc;
+
 import java.util.Scanner;
+import java.awt.Point;
 import java.math.BigInteger;
 
 
@@ -89,8 +92,8 @@ public class ECCAlgorithm {
             */
             xr = 0;
             yr = 0;
-            nilaiX = basis.getX();
-            nilaiY = basis.getY();
+            nilaiX = (int) basis.getX();
+            nilaiY = (int) basis.getY();
             tempX = nilaiX;
             tempY = nilaiY;
             lambdaDup = lambdaDuplication(tempX, tempY);
@@ -114,8 +117,8 @@ public class ECCAlgorithm {
             */
             xr = 0;
             yr = 0;
-            nilaiX = PB.getX();
-            nilaiY = PB.getY();
+            nilaiX = (int) PB.getX();
+            nilaiY = (int) PB.getY();
             tempX = nilaiX;
             tempY = nilaiY;
             lambdaDup = lambdaDuplication(tempX, tempY);
@@ -140,8 +143,8 @@ public class ECCAlgorithm {
             */
             xr = 0;
             yr = 0;
-            nilaiX = basis.getX();
-            nilaiY = basis.getY();
+            nilaiX = (int) basis.getX();
+            nilaiY = (int) basis.getY();
             tempX = nilaiX;
             tempY = nilaiY;
             lambdaDup = lambdaDuplication(tempX, tempY);
@@ -164,15 +167,15 @@ public class ECCAlgorithm {
             /*
             hitung titik (PM + kPB) sebagai koordinat y dari PC
             */
-            xp = PM1.getX();
-            yp = PM1.getY();
-            xq = kPB.getX();
-            yq = kPB.getY();
+            xp = (int) PM1.getX();
+            yp = (int) PM1.getY();
+            xq = (int) kPB.getX();
+            yq = (int) kPB.getY();
             lambdaAdd = lambdaAddition(xp, yp, xq, yq);
             tempLambda = lambdaAdd;
             xr = (((int)Math.pow(tempLambda, 2) - xp - xq)%intPrimeNumber + intPrimeNumber)%intPrimeNumber;
             yr = (((tempLambda*(xp-xr)) - yp)%intPrimeNumber + intPrimeNumber)%intPrimeNumber; // (a % b + b) % b modulo for giving positive value (a%b give negative!)
-            Point PC1 = new Point(kB.getX(),kB.getY());
+            Point PC1 = new Point((int)kB.getX(),(int)kB.getY());
             Point PC2 = new Point(xr,yr);
             System.out.println("\nNilai PC1: " + PC1.toString() + " << kB");
             System.out.println("\nNilai PC2: " + PC2.toString() + " << PM + kPB");
@@ -183,8 +186,8 @@ public class ECCAlgorithm {
             */
             xr = 0;
             yr = 0;
-            nilaiX = kB.getX();
-            nilaiY = kB.getY();
+            nilaiX = (int) kB.getX();
+            nilaiY = (int) kB.getY();
             tempX = nilaiX;
             tempY = nilaiY;
             lambdaDup = lambdaDuplication(tempX, tempY);
