@@ -6,27 +6,27 @@
 
 /**
  *
- * @author v8areu
+ * @author 
  */
 public class Point {
-        private final double x;
-    private final double y;
+    private final int x;
+    private final int y;
 
-    public Point(double x, double y) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-
-    public double getX() {
+    
+    public int getX() {
         return x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
-
-
+    
+    
     @Override
     public String toString() {
         return ("(" + x + "," + y + ")"); 
