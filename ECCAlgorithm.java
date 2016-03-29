@@ -1,5 +1,12 @@
 //package ecc;
 
+/**
+ * kalo mau ganti nilai prime number, harus cek dulu titik basisnya ada gak di kurva, tinggal masukin aja ke fungsi ECC lalu dapetin PM1: PM1 ini bisa jadi basis karena ada pada kurva
+ * kalo dapet y tidak ditemukan (pas nyari PM1), maka X itu ga punya pasangannya dan harus diganti
+ * kalo udah dapet pasangan PM1-> bisa jadi basis
+ * untuk ngecek juga bisa pake nilai kPB = b.(kB). harus sama
+ * notasinya pake yang di slide halaman 60 yang elgaman ECC. b=privatekey (kalo di sini b itu variabel koefisien dari E). privatekey punya variabel sendiri
+ */
 import java.util.Scanner;
 import java.awt.Point;
 import java.math.BigInteger;
