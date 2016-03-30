@@ -1,3 +1,7 @@
+package ecc;
+
+import java.math.BigInteger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,20 +13,25 @@
  * @author 
  */
 public class Point {
-    private int x;
-    private int y;
+    private BigInteger x;
+    private BigInteger y;
 
-    public Point(int x, int y) {
+    public Point(BigInteger x, BigInteger y) {
         this.x = x;
         this.y = y;
     }
+    public Point() {
+        this.x = new BigInteger("0");
+        this.y = new BigInteger("0");
+
+    }
 
     
-    public int getX() {
+    public BigInteger getX() {
         return x;
     }
 
-    public int getY() {
+    public BigInteger getY() {
         return y;
     }
     
