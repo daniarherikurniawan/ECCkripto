@@ -1,5 +1,6 @@
 package ecc;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 /*
@@ -12,7 +13,7 @@ import java.math.BigInteger;
  *
  * @author 
  */
-public class Point {
+public class Point implements Serializable{
     private BigInteger x;
     private BigInteger y;
 
@@ -38,6 +39,6 @@ public class Point {
     
     @Override
     public String toString() {
-        return ("(" + x + "," + y + ")"); 
+        return new StringBuffer("{\n\t\t" + x + ",\n\t\t" + y+"\n\t}" ).toString(); 
     }
 }
